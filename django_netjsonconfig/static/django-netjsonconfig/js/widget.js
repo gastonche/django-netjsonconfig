@@ -150,7 +150,7 @@
             });
 
             // add advanced edit button
-            header = editorContainer.find('> div > h3');
+            var header = editorContainer.find('> div > h3');
             header.find('span:first-child').hide();  // hides editor title
             header.attr('class', 'controls');
             // move advanced mode button in auto-generated UI
