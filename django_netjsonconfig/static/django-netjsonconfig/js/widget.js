@@ -30,10 +30,12 @@
         }
     }
 
-    var initAdvancedEditor = function(target, data, schema){
+    var initAdvancedEditor = function(target, data, schema, disableSchema){
         var advanced = $("<div id='advanced_editor'></div>");
         $(advanced).insertBefore($(target));
         $(target).hide();
+        // if disableSchema is true, do not validate. Default is false
+        schema = disableSchema?{}:schema;
         var options = {
             mode:'code',
             theme: 'ace/theme/tomorrow_night_bright',
@@ -58,7 +60,7 @@
         advanced.parents('.field-config').find('.screen-mode').click(toggleFullScreen);
         // add controls to the editor header
         advanced.find('.jsoneditor-menu')
-            .append($('<a href="javascript:;" class="jsoneditor-exit"><img class="icon" src="/static/admin/img/icon-deletelink.svg" /> back to normal mode</a>'))
+            .append($('<a href="javascript:;" class="jsoneditor-exit"><img class="icon" src="http://localhost:8000/static/admin/img/icon-deletelink.svg" /> back to normal mode</a>'))
             .append(advanced.parents('.field-config').find('#netjsonconfig-hint')
                 .clone(true)
                 .attr('id','netjsonconfig-hint-advancedmode'))
@@ -182,6 +184,7 @@
     };
     $(function() {
         $.getJSON(django._netjsonconfigSchemaUrl).success(function(schemas){
+            console.log(""+schemas+"");
             var backend = $('#id_backend');
             // load first time
             loadUi(backend.val(), schemas, true)
